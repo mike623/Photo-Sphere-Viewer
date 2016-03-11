@@ -17,7 +17,7 @@ PSVHUD.prototype = Object.create(PSVComponent.prototype);
 PSVHUD.prototype.constructor = PSVHUD;
 
 PSVHUD.className = 'psv-hud';
-PSVHUD.publicMethods = ['addMarker', 'removeMarker', 'updateMarker', 'getMarker', 'getCurrentMarker', 'gotoMarker', 'hideMarker', 'showMarker', 'toggleMarker'];
+PSVHUD.publicMethods = ['addMarker', 'removeMarker', 'updateMarker', 'getMarker', 'getCurrentMarker', 'gotoMarker', 'hideMarker', 'showMarker', 'toggleMarker', 'resetMarkers'];
 
 PSVHUD.svgNS = 'http://www.w3.org/2000/svg';
 
@@ -330,6 +330,20 @@ PSVHUD.prototype.removeMarker = function(marker, render) {
 };
 
 /**
+ * Remove all markers
+ * @param render (Boolean) "false" to disable immediate render
+ */
+PSVHUD.prototype.resetMarkers = function(render) {
+  Object.keys(this.markers).forEach(function(marker) {
+    this.removeMarker(marker, false)
+  }, this);
+
+  if (render !== false) {
+    this.updatePositions();
+  }
+};
+
+/**
  * Go to a specific marker
  * @param marker (Mixed)
  * @param duration (Mixed, optional)
@@ -375,7 +389,9 @@ PSVHUD.prototype.toggleMarker = function(marker) {
  * @return (void)
  */
 PSVHUD.prototype.updatePositions = function() {
-  var rotation = this.psv.camera.rotation.z / Math.PI * 180;
+  // FIXME: only when using gyroscope
+  //var rotation = this.psv.camera.rotation.z / Math.PI * 180;
+  var rotation = 0;
 
   for (var id in this.markers) {
     var marker = this.markers[id];

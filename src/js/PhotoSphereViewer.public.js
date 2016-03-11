@@ -2,6 +2,10 @@
  * Starts to load the panorama
  */
 PhotoSphereViewer.prototype.load = function() {
+  if (!this.config.panorama) {
+    throw new PSVError('No value given for panorama.');
+  }
+
   this.setPanorama(this.config.panorama, false);
 };
 
@@ -67,7 +71,7 @@ PhotoSphereViewer.prototype.render = function(updateDirection) {
   if (updateDirection !== false) {
     this.prop.direction = this.sphericalCoordsToVector3(this.prop.longitude, this.prop.latitude);
     this.camera.lookAt(this.prop.direction);
-    this.camera.rotation.z = 0;
+    //this.camera.rotation.z = 0;
   }
 
   this.camera.fov = this.config.max_fov + (this.prop.zoom_lvl / 100) * (this.config.min_fov - this.config.max_fov);

@@ -40,8 +40,8 @@ function PhotoSphereViewer(options) {
   }
 
   // check config
-  if (!options.panorama || !options.container) {
-    throw new PSVError('No value given for panorama or container.');
+  if (!options.container) {
+    throw new PSVError('No value given for container.');
   }
 
   if ((!PhotoSphereViewer.SYSTEM.isWebGLSupported || !this.config.webgl) && !PSVUtils.checkTHREE('CanvasRenderer', 'Projector')) {
@@ -243,3 +243,6 @@ PhotoSphereViewer.DEFAULTS = {
   size: null,
   markers: []
 };
+
+PhotoSphereViewer.Utils = PSVUtils;
+PhotoSphereViewer.Error = PSVError;
